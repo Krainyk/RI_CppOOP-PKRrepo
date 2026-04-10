@@ -1,0 +1,101 @@
+#include "Time.h"
+
+Time::Time() : first(0), second(0) {}
+
+Time::Time(int h, int m) {
+    Init(h, m);
+}
+
+Time::Time(const Time& t) {
+    first = t.first;
+    second = t.second;
+}
+
+int Time::GetHours() const { return first; }
+int Time::GetMinutes() const { return second; }
+
+void Time::SetHours(int h) {
+    if (h >= 0)
+        first = h;
+    else {
+        cout << "Помилка: години < 0\n";
+        exit(1);
+    }
+}
+
+void Time::SetMinutes(int m) {
+    if (m >= 0 && m < 60)
+        second = m;
+    else {
+        cout << "Помилка: хвилини некоректні\n";
+        exit(1);
+    }
+}
+
+void Time::Init(int h, int m) {
+    SetHours(h);
+    SetMinutes(m);
+}
+
+void Time::Display() const {
+    cout << first << " год " << second << " хв\n";
+}
+
+int Time::minutes() const {
+    return first * 60 + second;
+}
+
+Time& Time::operator=(const Time& t) {
+    if (this != &t) {
+        first = t.first;
+        second = t.second;
+    }
+    return *this;
+}
+
+Time& Time::operator++() {
+    first++;
+    return *this;
+}
+
+Time Time::operator++(int) {
+    Time temp(*this);
+    second++;
+    return temp;
+}
+
+Time& Time::operator--() {
+    first--;
+    return *this;
+}
+
+Time Time::operator--(int) {
+    Time temp(*this);
+    second--;
+    return temp;
+}
+
+Time::operator string() const {
+    return to_string(first) + "h " + to_string(second) + "m";
+}
+
+istream& operator>>(istream& in, Time& t) {
+    cout << "Введіть години: ";
+    in >> t.first;
+    cout << "Введіть хвилини: ";
+    in >> t.second;
+    return in;
+}
+
+ostream& operator<<(ostream& out, const Time& t) {
+    out << t.first << " год " << t.second << " хв";
+    return out;
+}
+
+Time makeTime(int h, int m) {
+    if (h < 0 || m < 0 || m >= 60) {
+        cout << "Некоректні дані!\n";
+        exit(1);
+    }
+    return Time(h, m);
+}
