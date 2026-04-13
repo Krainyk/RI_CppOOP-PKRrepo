@@ -27,7 +27,7 @@ void Time::SetMinutes(int m) {
     if (m >= 0 && m < 60)
         second = m;
     else {
-        cout << "Помилка: хвилини некоректні\n";
+        cout << "Помилка: хвилини некоректні";
         exit(1);
     }
 }
@@ -38,7 +38,7 @@ void Time::Init(int h, int m) {
 }
 
 void Time::Display() const {
-    cout << first << " год " << second << " хв\n";
+    cout << first << " год " << second << " хв";
 }
 
 int Time::minutes() const {
@@ -54,24 +54,37 @@ Time& Time::operator=(const Time& t) {
 }
 
 Time& Time::operator++() {
-    first++;
+    second++;
+    if (second >= 60) {
+        second = 0;
+        first++;
+    }
     return *this;
 }
 
 Time Time::operator++(int) {
     Time temp(*this);
-    second++;
+    ++(*this);
     return temp;
 }
 
 Time& Time::operator--() {
-    first--;
+    if (first == 0 && second == 0) {
+        cout << "Помилка: час не може бути менше 0";
+        return *this;
+	}
+
+    second--;
+    if (second < 0) {
+        second = 59;
+        first--;
+    }
     return *this;
 }
 
 Time Time::operator--(int) {
     Time temp(*this);
-    second--;
+    --(*this);
     return temp;
 }
 
@@ -80,10 +93,13 @@ Time::operator string() const {
 }
 
 istream& operator>>(istream& in, Time& t) {
+    int h, m;
     cout << "Введіть години: ";
-    in >> t.first;
+    in >> h;
     cout << "Введіть хвилини: ";
-    in >> t.second;
+    in >> m;
+    t.SetHours(h);
+    t.SetMinutes(m);
     return in;
 }
 
