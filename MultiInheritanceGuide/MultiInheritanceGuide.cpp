@@ -170,4 +170,12 @@ int main() {
 	objd.A::show();
 	objd.B::show();
 	objd.C::show();
+
+	B objb(20, 30);
+	objb.show();
+
+	C objc(40, 50);
+	objc.show();
+
+	return 0;
 }
