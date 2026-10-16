@@ -1,0 +1,36 @@
+﻿#pragma once
+#include <iostream>
+#include <string>
+using namespace std;
+
+class RightAngled {
+private:
+    class Pair {
+    private:
+        double first;
+        double second;
+
+    public:
+        double getFirst() const { return first; }
+        double getSecond() const { return second; }
+
+        void setFirst(double value) { first = value; }
+        void setSecond(double value) { second = value; }
+
+        void Init(double a, double b);
+        void Read();
+        void Display() const;
+        string toString() const;
+        double product() const;
+    };
+
+    Pair legs;
+
+public:
+    void Init(double a, double b);
+    void Read();
+    void Display() const;
+    string toString() const;
+    double hypotenuse() const;
+    double area() const;
+};
